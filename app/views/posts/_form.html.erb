@@ -1,0 +1,25 @@
+<%= form_for @post do |f| %>
+
+<%= render 'shared/errors', obj: @post %>
+
+<div>
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :url %>
+    <%= f.text_field :url %>
+  </div>
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_area :description, rows: 3 %>
+  </div>
+
+  <%= collection_check_boxes(:post, :category_ids, Category.all, :id, :name) do |b| %>
+    <%= b.label() { b.check_box + b.text } %>
+  <% end %>
+  <p><%= f.submit %></p>
+  
+</div>
+<% end %>
