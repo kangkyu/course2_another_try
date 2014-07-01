@@ -17,6 +17,7 @@
   | <%= link_to 'Edit', edit_post_path(@post) %></p>
 </div>
 
+<% if logged_in? %>
 <div class="comment-box">
 <%= form_for [@post, @comment] do |f| %>
   <%= render 'shared/errors', obj: @comment %>
@@ -29,6 +30,7 @@
 
 <% end %>
 </div>
+<% end %>
 
 <% @post.comments.each do |comment| %>
   <div class="comment-box">

@@ -1,8 +1,9 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update]
+  before_action :require_user, except: [:show, :index]
 
   def index
-    @posts = Post.all
+    @posts = Post.find(:all).reverse
   end
 
   def show
@@ -16,7 +17,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-    @post.user_id = 2 # need fix
+    @post.creator = current_user
 
     if @post.save
       redirect_to @post #
