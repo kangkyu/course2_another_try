@@ -1,19 +1,36 @@
-<%= render 'shared/header' %>
+<% if @post.categories.any? %>
+  <% @post.categories.each do |category| %>
+    <small>| <%= link_to category.name, category_path(category) %></small>
+  <% end %><small> |</small><br>
+<% end %>  
 <%= render 'shared/content_title', title: "Post: #{@post.title}" %>
-<%= render 'post', post: @post %>
+
+  <p>
+    <strong><%= link_to @post.url, http_url(@post.url) %></strong><br>
+    <%= @post.description %>
+  </p>
+  <p>
+    by <%= link_to @post.creator.username, user_path(@post.creator) %>
+    <small><%= "(#{show_time(@post.created_at)})" %></small>
+  </p>
+
+<p><%= link_to 'Back', posts_path %>
+  | <%= link_to 'Edit', edit_post_path %></p>
 
 <% if logged_in? %>
-<div class="comment-box">
-  <%= form_for [@post, @comment] do |f| %>
-    <%= render 'shared/errors', obj: @comment %>
-
-    <div class="field">
-      <%= f.label :body, 'Leave a Comment:' %><br>
-      <%= f.text_area :body, rows: 3 %>
-    </div>
-    <p><%= f.submit %></p>
-  <% end %>
-</div>
+  <div class="comment-box">
+    <%= form_for [@post, @comment] do |f| %>
+      <%= render 'shared/errors', obj: @comment %>
+    
+      <div class="field">
+        <%= f.label :body, 'Leave a Comment:' %><br>
+        <%= f.text_area :body, rows: 3 %>
+      </div>
+      <p><%= f.submit %></p>
+    <% end %>
+  </div>
 <% end %>
 
-<%= render 'comments/comments', comments: @post.comments %>
+<% if @post.comments.any? %>
+  <%= render @post.comments %>
+<% end %>

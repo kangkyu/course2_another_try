@@ -1,6 +1,0 @@
-<% comments.each do |comment| %>
-  <div class="comment-box">
-    "<%= comment.body %>"<br>
-    by <%= link_to comment.creator.username, user_path(comment.creator) %> (at <small><%= comment.created_at %></small>)
-  </div>
-<% end %>
