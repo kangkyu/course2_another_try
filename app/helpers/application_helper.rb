@@ -9,6 +9,6 @@ module ApplicationHelper
   end
 
   def show_time(d)
-    d.strftime("at %H:%M, %F")
+    d.strftime("at %H:%M, %F") if d
   end
 end

@@ -9,20 +9,4 @@
 | <%= link_to 'register', register_path %></p>
 <% end %>
 
-<% @posts.each do |post| %>
-
-<div class="post-box"> 
-
-  <% if post.categories.any? %>
-    <% post.categories.each do |category| %>
-      <small>| <%= link_to category.name, category_path(category) %></small>
-    <% end %><small> |</small><br>
-  <% end %>
-  <p>
-    <strong><%= link_to post.title, post_path(post) %></strong><br>
-    <%= post.url %>
-  </p>
-  <p><%= post.description %></p>
-</div>
-
-<% end %>
+<%= render 'posts', posts: @posts %>

@@ -41,7 +41,7 @@ Course2::Application.routes.draw do
   #     resource :seller
   #   end
   resources :posts, except: [:destroy] do
-    resources :comments, only: [:create]
+    resources :comments, only: [:create, :index]
   end
   
   # Example resource route with more complex sub-resources:
