@@ -1,4 +1,7 @@
 class CategoriesController < ApplicationController
+  before_action :require_user, except: [:show]
+  before_action :set_category, only: [:show, :edit, :update]
+
   def new
     @category = Category.new
   end
@@ -14,15 +17,15 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @category = Category.find(params[:id])
+    # @category = Category.find(params[:id])
   end
 
   def edit
-    @category = Category.find(params[:id])
+    # @category = Category.find(params[:id])
   end
 
   def update
-    @category = Category.find(params[:id])
+    # @category = Category.find(params[:id])
 
     if @category.update(category_params)
       redirect_to @category
@@ -34,5 +37,9 @@ class CategoriesController < ApplicationController
   private
   def category_params
     params.require(:category).permit(:name)
+  end
+
+  def set_category
+    @category = Category.find(params[:id])
   end
 end

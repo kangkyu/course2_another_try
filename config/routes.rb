@@ -5,8 +5,15 @@ Course2::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
   root 'posts#index'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
+  get '/register', to: 'users#new'
+  post '/register', to: 'users#create'
+  
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
+  get '/logout', to: 'sessions#destroy'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
@@ -14,6 +21,7 @@ Course2::Application.routes.draw do
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
   resources :categories, only: [:create, :new, :edit, :update, :show]
+  resources :users, only: [:show, :edit, :update]
 
   # Example resource route with options:
   #   resources :products do
@@ -33,7 +41,7 @@ Course2::Application.routes.draw do
   #     resource :seller
   #   end
   resources :posts, except: [:destroy] do
-    resources :comments, only: [:create]
+    resources :comments, only: [:create, :index]
   end
   
   # Example resource route with more complex sub-resources:

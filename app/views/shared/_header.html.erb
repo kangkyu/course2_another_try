@@ -1,0 +1,9 @@
+<% if logged_in? %>
+<p><%= link_to 'Profile', user_path(current_user) %>
+| <%= link_to 'New Post', new_post_path %> 
+| <%= link_to 'New Category', new_category_path %>
+| <%= link_to 'log out', logout_path %></p>
+<% else %>
+<p><%= link_to 'log in', login_path %>
+| <%= link_to 'register', register_path %></p>
+<% end %>

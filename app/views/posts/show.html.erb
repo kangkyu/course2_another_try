@@ -1,38 +1,36 @@
+<% if @post.categories.any? %>
+  <% @post.categories.each do |category| %>
+    <small>| <%= link_to category.name, category_path(category) %></small>
+  <% end %><small> |</small><br>
+<% end %>  
 <%= render 'shared/content_title', title: "Post: #{@post.title}" %>
 
-<div class="post-box"> 
-
-  <% if @post.categories.any? %>
-    <% @post.categories.each do |category| %>
-      <small>| <%= link_to category.name, category_path(category) %></small>
-    <% end %><small> |</small><br>
-  <% end %>
-  
   <p>
-    <strong><%= link_to @post.url, http_url(@post.url) %></strong>
+    <strong><%= link_to @post.url, http_url(@post.url) %></strong><br>
+    <%= @post.description %>
   </p>
-  <p><%= @post.description %><br>
-  by <%= @post.creator.username %> (<small><%= show_time(@post.created_at) %></small>)</p>
-  <p><%= link_to 'Back', posts_path %>
-  | <%= link_to 'Edit', edit_post_path(@post) %></p>
-</div>
+  <p>
+    by <%= link_to @post.creator.username, user_path(@post.creator) %>
+    <small><%= "(#{show_time(@post.created_at)})" %></small>
+  </p>
 
-<div class="comment-box">
-<%= form_for [@post, @comment] do |f| %>
-  <%= render 'shared/errors', obj: @comment %>
+<p><%= link_to 'Back', posts_path %>
+  | <%= link_to 'Edit', edit_post_path %></p>
 
-  <div class="field">
-    <%= f.label :body, 'Leave a Comment:' %><br>
-    <%= f.text_area :body, rows: 3 %>
-  </div>
-  <p><%= f.submit %></p>
-
-<% end %>
-</div>
-
-<% @post.comments.each do |comment| %>
+<% if logged_in? %>
   <div class="comment-box">
-    "<%= comment.body %>"<br>
-    by <%= comment.creator.username %> (at <small><%= comment.created_at %></small>)
+    <%= form_for [@post, @comment] do |f| %>
+      <%= render 'shared/errors', obj: @comment %>
+    
+      <div class="field">
+        <%= f.label :body, 'Leave a Comment:' %><br>
+        <%= f.text_area :body, rows: 3 %>
+      </div>
+      <p><%= f.submit %></p>
+    <% end %>
   </div>
+<% end %>
+
+<% if @post.comments.any? %>
+  <%= render @post.comments %>
 <% end %>

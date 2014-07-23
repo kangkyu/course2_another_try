@@ -1,0 +1,13 @@
+<%= render 'shared/content_title', title: "Profile: #{@user.username}" %>
+<p><%= link_to 'Back', posts_path %>
+  | <%= link_to 'Edit', edit_user_path %></p>
+
+<% if @user.posts.any? %>
+  <p>Posts</p>
+  <%= render @user.posts %>
+<% end %>
+
+<% if @user.comments.any? %>
+  <p>Comments</p>
+  <%= render @user.comments %>
+<% end %>

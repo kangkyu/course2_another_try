@@ -1,0 +1,19 @@
+<div class="post-box"> 
+
+  <% if post.categories.any? %>
+    <% post.categories.each do |category| %>
+      <small>| <%= link_to category.name, category_path(category) %></small>
+    <% end %><small> |</small><br>
+  <% end %>  
+  <p>
+    <strong><%= post.title %></strong> <small><%= link_to "#{post.comments.count} comments", post_path(post) %></small><br>
+    <small><%= link_to post.url, http_url(post.url) %></small>
+  </p>
+  <p><%= post.description %><br>
+
+  by <%= link_to post.creator.username, user_path(post.creator) %> (<small><%= show_time(post.created_at) %></small>)</p>
+  
+  <p><%= link_to 'Back', posts_path %>
+  | <%= link_to 'Edit', edit_post_path(post) %></p>
+  
+</div>
