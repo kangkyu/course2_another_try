@@ -1,5 +1,9 @@
 <div class="post-box"> 
 
+  <%= post.total_votes %>
+  <%= link_to "up", vote_post_path(post, vote: true), method: 'post' %>
+  <%= link_to "down", vote_post_path(post, vote: false), method: 'post' %>
+
   <% if post.categories.any? %>
     <% post.categories.each do |category| %>
       <small>| <%= link_to category.name, category_path(category) %></small>

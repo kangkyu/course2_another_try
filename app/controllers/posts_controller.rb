@@ -2,6 +2,13 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update]
   before_action :require_user, except: [:index, :show]
 
+  def vote
+    @vote = Vote.create(vote: params[:vote], post_id: params[:id])
+    # @vote.save
+
+    redirect_to :back
+  end
+
   def index
     @posts = Post.find(:all).reverse
   end

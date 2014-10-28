@@ -6,8 +6,6 @@ Course2::Application.routes.draw do
   # root 'welcome#index'
   root 'posts#index'
 
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
   get '/register', to: 'users#new'
   post '/register', to: 'users#create'
   
@@ -15,13 +13,25 @@ Course2::Application.routes.draw do
   post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
 
+
+  resources :posts, except: [:destroy] do
+    member do
+      post 'vote'
+    end
+    resources :comments, only: [:create, :index]
+  end
+
+  resources :categories, only: [:create, :new, :edit, :update, :show]
+  resources :users, only: [:show, :edit, :update]
+
+  # Example of regular route:
+  #   get 'products/:id' => 'catalog#view'
+
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
-  resources :categories, only: [:create, :new, :edit, :update, :show]
-  resources :users, only: [:show, :edit, :update]
 
   # Example resource route with options:
   #   resources :products do
@@ -40,9 +50,6 @@ Course2::Application.routes.draw do
   #     resources :comments, :sales
   #     resource :seller
   #   end
-  resources :posts, except: [:destroy] do
-    resources :comments, only: [:create, :index]
-  end
   
   # Example resource route with more complex sub-resources:
   #   resources :products do
